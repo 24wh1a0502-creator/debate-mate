@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DebateMate - Practice Debates with AI</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <!-- ============================================
+    APP CONTAINER
+    ============================================ -->
+    <div class="app-container">
+
+        <!-- ============================================
+        NAVIGATION
+        ============================================ -->
+        <nav class="navbar">
+            <div class="logo" onclick="showPage('home')">
+                <span class="logo-icon">⚖️</span>
+                <span class="logo-text">DebateMate</span>
+            </div>
+
+            <div class="nav-links">
+                <button class="nav-link active" data-page="home" onclick="showPage('home')">Home</button>
+                <button class="nav-link" data-page="topics" onclick="showPage('topics')">Topics</button>
+                <button class="nav-link" data-page="dashboard" onclick="showPage('dashboard')">Dashboard</button>
+                <button class="nav-btn nav-btn-primary" id="authBtn" onclick="toggleAuth()">Login</button>
+            </div>
+        </nav>
+
+        <!-- ============================================
+        PAGE: HOME (Landing)
+        ============================================ -->
+        <section id="page-home" class="page active">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1>Sharpen Your Arguments.<br />Master Your Debates.</h1>
+                    <p>
+                        Practice debating against AI, anytime, anywhere. Choose a topic,
+                        pick your side, and get instant AI counter-arguments with
+                        real-time scoring and feedback.
+                    </p>
+                    <div class="hero-buttons">
+                        <button class="hero-btn hero-btn-primary" onclick="showPage('topics')">
+                            🚀 Start Debating Now
+                        </button>
+                        <button class="hero-btn hero-btn-secondary" onclick="showPage('topics')">
+                            📚 Explore Topics
+                        </button>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">10K+</span>
+                            <span class="stat-label">Debates Completed</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">85%</span>
+                            <span class="stat-label">User Improvement</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">50+</span>
+                            <span class="stat-label">Countries</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-visual">
+                    <div class="debate-preview">
+                        <div class="bubble user-bubble">
+                            <span>💬</span>
+                            "AI will replace human jobs..."
+                            <div class="bubble-score">85</div>
+                        </div>
+                        <div class="bubble ai-bubble">
+                            <span>🤖</span>
+                            "History shows technology creates new roles..."
+                            <div class="bubble-score">78</div>
+                        </div>
+                        <div class="floating-emojis">
+                            <span>🧠</span>
+                            <span>⚡</span>
+                            <span>🏆</span>
+                            <span>💪</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features -->
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>100+ Topics</h3>
+                    <p>Technology, Philosophy, Politics, Health, and more</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI Powered</h3>
+                    <p>Smart counter-arguments with reasoning and feedback</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Real Scores</h3>
+                    <p>Instant feedback and improvement suggestions</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================
+        PAGE: TOPICS
+        ============================================ -->
+        <section id="page-topics" class="page">
+            <div class="topics-header">
+                <h2>📋 Choose Your Debate Topic</h2>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search topics..." id="topicSearch" oninput="filterTopics()" />
+                </div>
+            </div>
+
+            <div class="category-tabs">
+                <button class="category-tab active" data-category="all" onclick="filterByCategory('all')">
+                    All
+                </button>
+                <button class="category-tab" data-category="technology" onclick="filterByCategory('technology')">
+                    💻 Technology
+                </button>
+                <button class="category-tab" data-category="politics" onclick="filterByCategory('politics')">
+                    🏛️ Politics
+                </button>
+                <button class="category-tab" data-category="philosophy" onclick="filterByCategory('philosophy')">
+                    🧠 Philosophy
+                </button>
+                <button class="category-tab" data-category="health" onclick="filterByCategory('health')">
+                    ❤️ Health
+                </button>
+                <button class="category-tab" data-category="environment" onclick="filterByCategory('environment')">
+                    🌍 Environment
+                </button>
+                <button class="category-tab" data-category="education" onclick="filterByCategory('education')">
+                    📚 Education
+                </button>
+                <button class="category-tab" data-category="business" onclick="filterByCategory('business')">
+                    💼 Business
+                </button>
+            </div>
+
+            <div class="topics-grid" id="topicsGrid">
+                <!-- Topics will be rendered by JavaScript -->
+            </div>
+        </section>
+
+        <!-- ============================================
+        PAGE: DEBATE ROOM
+        ============================================ -->
+        <section id="page-debate" class="page">
+            <div class="debate-header">
+                <div class="debate-topic-info">
+                    <span class="debate-topic" id="debateTopic">AI Will Replace Human Jobs in 10 Years</span>
+                    <span class="debate-side" id="debateSide">You: FOR</span>
+                    <span class="debate-difficulty" id="debateDifficulty">⚡ Medium</span>
+                </div>
+                <div class="debate-timer">
+                    ⏱️ <span id="debateTimer">00:00</span>
+                    <span class="round-info">Round <span id="currentRound">1</span>/5</span>
+                </div>
+                <button class="btn btn-danger" onclick="endDebate()">⏹️ End Debate</button>
+            </div>
+
+            <div class="debate-container">
+                <div class="debate-chat" id="debateChat">
+                    <!-- Debate messages will be rendered here -->
+                    <div class="debate-start-msg">
+                        <p>🎯 Debate Started!</p>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                            Make your opening argument...
+                        </p>
+                    </div>
+                </div>
+
+                <div class="debate-sidebar">
+                    <div class="score-card">
+                        <h4>📊 Live Scores</h4>
+                        <div class="score-row">
+                            <span>YOU</span>
+                            <span class="score-value" id="userScore">0</span>
+                            <div class="score-bar">
+                                <div class="score-fill user-score-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="score-row">
+                            <span>AI</span>
+                            <span class="score-value" id="aiScore">0</span>
+                            <div class="score-bar">
+                                <div class="score-fill ai-score-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="iq-card">
+                        <h4>🧠 Debate IQ</h4>
+                        <div class="iq-meter">
+                            <div class="iq-fill" id="iqFill" style="width: 0%"></div>
+                        </div>
+                        <span class="iq-value" id="iqValue">0</span>
+                    </div>
+
+                    <div class="tips-card" id="tipsCard">
+                        <h4>💡 Quick Tips</h4>
+                        <ul id="tipsList">
+                            <li>Use evidence to support your claims</li>
+                            <li>Address counter-arguments directly</li>
+                            <li>Structure your arguments clearly</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="debate-input-area">
+                <div class="input-wrapper">
+                    <textarea
+                    id="debateInput"
+                    placeholder="Type your argument here..."
+                    rows="2"
+                    onkeydown="handleEnter(event)"
+                    ></textarea>
+                    <button class="btn btn-primary" onclick="sendArgument()">📤 Send</button>
+                </div>
+                <div class="input-actions">
+                    <button class="btn btn-secondary" onclick="speakArgument()">🎤 Speak</button>
+                    <button class="btn btn-secondary" onclick="getHint()">🤔 Get Hint</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================
+        PAGE: DASHBOARD
+        ============================================ -->
+        <section id="page-dashboard" class="page">
+            <div class="dashboard-header">
+                <h2>👋 Welcome, <span id="username">Debater</span>!</h2>
+                <div class="dashboard-actions">
+                    <button class="btn btn-secondary" onclick="logout()">🚪 Logout</button>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-number" id="totalDebates">0</div>
+                    <div class="stat-label">Total Debates</div>
+                </div>
+                <div class="stat-card stat-win">
+                    <div class="stat-icon">🏆</div>
+                    <div class="stat-number" id="wins">0</div>
+                    <div class="stat-label">Wins</div>
+                </div>
+                <div class="stat-card stat-loss">
+                    <div class="stat-icon">❌</div>
+                    <div class="stat-number" id="losses">0</div>
+                    <div class="stat-label">Losses</div>
+                </div>
+                <div class="stat-card stat-draw">
+                    <div class="stat-icon">⚖️</div>
+                    <div class="stat-number" id="draws">0</div>
+                    <div class="stat-label">Draws</div>
+                </div>
+            </div>
+
+            <div class="dashboard-row">
+                <div class="dashboard-card">
+                    <h3>🧠 Debate IQ</h3>
+                    <div class="iq-meter-large">
+                        <div class="iq-fill-large" id="iqFillLarge" style="width: 0%"></div>
+                    </div>
+                    <span class="iq-value-large" id="iqValueLarge">0</span>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 10px;">
+                        🔥 You're better than <span id="percentile">0</span>% of debaters!
+                    </p>
+                </div>
+
+                <div class="dashboard-card">
+                    <h3>🏅 Achievements</h3>
+                    <div class="achievements-grid" id="achievementsGrid">
+                        <!-- Rendered by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-card full-width">
+                <h3>📋 Recent Debates</h3>
+                <div class="history-list" id="historyList">
+                    <p style="color: var(--text-secondary); text-align: center; padding: 20px;">
+                        No debates yet. Start your first debate!
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================
+        PAGE: AUTH MODAL (Login/Signup)
+        ============================================ -->
+        <div class="auth-modal" id="authModal">
+            <div class="auth-modal-content">
+                <span class="auth-close" onclick="closeAuth()">&times;</span>
+
+                <div id="loginForm">
+                    <h2>🔐 Welcome Back</h2>
+                    <form onsubmit="handleLogin(event)">
+                        <div class="form-group">
+                            <label>📧 Email</label>
+                            <input type="email" id="loginEmail" placeholder="your@email.com" required />
+                        </div>
+                        <div class="form-group">
+                            <label>🔒 Password</label>
+                            <input type="password" id="loginPassword" placeholder="••••••••" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Login</button>
+                        <p style="text-align: center; margin-top: 15px; color: var(--text-secondary);">
+                            Don't have an account?
+                            <span style="color: var(--primary); cursor: pointer;" onclick="switchAuth('signup')">
+                                Sign Up
+                            </span>
+                        </p>
+                    </form>
+                </div>
+
+                <div id="signupForm" style="display: none;">
+                    <h2>✨ Create Account</h2>
+                    <form onsubmit="handleSignup(event)">
+                        <div class="form-group">
+                            <label>👤 Username</label>
+                            <input type="text" id="signupUsername" placeholder="Choose a username" required />
+                        </div>
+                        <div class="form-group">
+                            <label>📧 Email</label>
+                            <input type="email" id="signupEmail" placeholder="your@email.com" required />
+                        </div>
+                        <div class="form-group">
+                            <label>🔒 Password</label>
+                            <input type="password" id="signupPassword" placeholder="••••••••" required />
+                        </div>
+                        <div class="form-group">
+                            <label>🔒 Confirm Password</label>
+                            <input type="password" id="signupConfirm" placeholder="••••••••" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+                        <p style="text-align: center; margin-top: 15px; color: var(--text-secondary);">
+                            Already have an account?
+                            <span style="color: var(--primary); cursor: pointer;" onclick="switchAuth('login')">
+                                Login
+                            </span>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+        DEBATE RESULT MODAL
+        ============================================ -->
+        <div class="result-modal" id="resultModal">
+            <div class="result-modal-content">
+                <div class="result-icon" id="resultIcon">🏆</div>
+                <h2 id="resultTitle">Debate Complete!</h2>
+                <div class="result-scores">
+                    <div class="result-score-item">
+                        <span>YOU</span>
+                        <span class="result-score-value" id="resultUserScore">0</span>
+                    </div>
+                    <div class="result-score-item">
+                        <span>AI</span>
+                        <span class="result-score-value" id="resultAiScore">0</span>
+                    </div>
+                </div>
+                <div class="result-feedback" id="resultFeedback">
+                    <p>💪 Great job! You showed strong reasoning skills.</p>
+                    <p>📈 Your evidence usage was excellent.</p>
+                    <p>🔴 Try to address counter-arguments more directly.</p>
+                </div>
+                <div class="result-actions">
+                    <button class="btn btn-primary" onclick="closeResult()">🔄 Debate Again</button>
+                    <button class="btn btn-secondary" onclick="closeResult()">📊 View Dashboard</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
