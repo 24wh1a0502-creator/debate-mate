@@ -1,6 +1,4 @@
-/* ============================================
-   CSS RESET & ROOT VARIABLES
-   ============================================ */
+
 * {
     margin: 0;
     padding: 0;
@@ -27,9 +25,6 @@
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ============================================
-   BASE STYLES
-   ============================================ */
 body {
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     background: var(--dark);
@@ -38,7 +33,7 @@ body {
     overflow-x: hidden;
 }
 
-/* Animated Background */
+
 body::before {
     content: '';
     position: fixed;
@@ -63,7 +58,7 @@ body::before {
     }
 }
 
-/* Scrollbar */
+
 ::-webkit-scrollbar {
     width: 8px;
 }
@@ -78,9 +73,7 @@ body::before {
     background: var(--primary-light);
 }
 
-/* ============================================
-   APP CONTAINER
-   ============================================ */
+
 .app-container {
     max-width: 1400px;
     margin: 0 auto;
@@ -90,9 +83,7 @@ body::before {
     flex-direction: column;
 }
 
-/* ============================================
-   NAVIGATION
-   ============================================ */
+
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -195,9 +186,6 @@ body::before {
     box-shadow: 0 8px 25px rgba(108, 99, 255, 0.4);
 }
 
-/* ============================================
-   PAGES
-   ============================================ */
 .page {
     display: none;
     animation: fadeIn 0.5s ease;
@@ -218,9 +206,7 @@ body::before {
     }
 }
 
-/* ============================================
-   LANDING PAGE
-   ============================================ */
+
 .hero {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -396,7 +382,7 @@ body::before {
     }
 }
 
-/* Features */
+
 .features {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -435,9 +421,7 @@ body::before {
     line-height: 1.6;
 }
 
-/* ============================================
-   TOPICS PAGE
-   ============================================ */
+
 .topics-header {
     display: flex;
     justify-content: space-between;
@@ -609,9 +593,7 @@ body::before {
     font-size: 0.85rem;
 }
 
-/* ============================================
-   DEBATE ROOM
-   ============================================ */
+
 .debate-header {
     display: flex;
     justify-content: space-between;
@@ -896,9 +878,7 @@ body::before {
     gap: 10px;
 }
 
-/* ============================================
-   DASHBOARD
-   ============================================ */
+
 .dashboard-header {
     display: flex;
     justify-content: space-between;
@@ -1068,9 +1048,7 @@ body::before {
     font-size: 0.85rem;
 }
 
-/* ============================================
-   AUTH MODAL
-   ============================================ */
+
 .auth-modal {
     display: none;
     position: fixed;
@@ -1152,9 +1130,7 @@ body::before {
     font-size: 1.1rem;
 }
 
-/* ============================================
-   RESULT MODAL
-   ============================================ */
+
 .result-modal {
     display: none;
     position: fixed;
@@ -1236,9 +1212,7 @@ body::before {
     flex-wrap: wrap;
 }
 
-/* ============================================
-   RESPONSIVE
-   ============================================ */
+
 @media (max-width: 1024px) {
     .hero {
         grid-template-columns: 1fr;

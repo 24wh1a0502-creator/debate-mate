@@ -1,11 +1,3 @@
-// ============================================
-// DEBATEMATE - Complete JavaScript
-// ============================================
-
-// ============================================
-// DATA
-// ============================================
-
 const topicsData = [
     {
         id: 1,
@@ -99,7 +91,6 @@ const topicsData = [
     }
 ];
 
-// Sample AI responses for different topics (for demo)
 const aiResponses = {
     "AI Will Replace Human Jobs in 10 Years": [
         "While automation will replace some jobs, history shows technology creates new roles we can't yet imagine. The internet created millions of jobs that didn't exist before.",
@@ -124,9 +115,7 @@ const aiResponses = {
     ]
 };
 
-// ============================================
-// STATE
-// ============================================
+
 
 let state = {
     currentPage: 'home',
@@ -150,15 +139,11 @@ let state = {
     }
 };
 
-// ============================================
-// DOM REFS
-// ============================================
+
 
 const $ = (id) => document.getElementById(id);
 
-// ============================================
-// PAGE NAVIGATION
-// ============================================
+
 
 function showPage(page) {
     // Hide all pages
@@ -187,9 +172,7 @@ function showPage(page) {
     }
 }
 
-// ============================================
-// AUTHENTICATION
-// ============================================
+
 
 function toggleAuth() {
     const modal = $('authModal');
@@ -219,13 +202,12 @@ function handleLogin(e) {
     const email = $('loginEmail').value;
     const password = $('loginPassword').value;
 
-    // Simple validation
     if (!email || !password) {
         alert('Please fill in all fields');
         return;
     }
 
-    // Demo login - just simulate success
+   
     state.isLoggedIn = true;
     state.currentUser = { username: 'Debater', email: email };
     closeAuth();
@@ -278,9 +260,7 @@ function updateUIAfterAuth() {
     }
 }
 
-// ============================================
-// TOPICS
-// ============================================
+
 
 let currentCategory = 'all';
 
@@ -341,10 +321,7 @@ function filterTopics() {
     renderTopics();
 }
 
-// ============================================
-// DEBATE
-// ============================================
-
+/
 function startDebate(topicId, side) {
     if (!state.isLoggedIn) {
         alert('Please login first to start a debate!');
@@ -363,7 +340,7 @@ function startDebate(topicId, side) {
     state.debateHistory = [];
     state.seconds = 0;
 
-    // Update UI
+    
     $('debateTopic').textContent = topic.title;
     $('debateSide').textContent = `You: ${side.toUpperCase()}`;
     $('debateDifficulty').textContent = `⚡ ${topic.difficulty}`;
@@ -372,13 +349,13 @@ function startDebate(topicId, side) {
     $('userScore').textContent = '0';
     $('aiScore').textContent = '0';
 
-    // Reset bars
+    
     document.querySelector('.user-score-fill').style.width = '0%';
     document.querySelector('.ai-score-fill').style.width = '0%';
     document.querySelector('.iq-fill').style.width = '0%';
     $('iqValue').textContent = '0';
 
-    // Clear chat
+    
     $('debateChat').innerHTML = `
                 <div class="debate-start-msg">
                     <p>🎯 Debate Started!</p>
@@ -391,16 +368,15 @@ function startDebate(topicId, side) {
                 </div>
             `;
 
-    // Clear input
+
     $('debateInput').value = '';
 
-    // Show debate page
+    
     showPage('debate');
 
-    // Start timer
     startTimer();
 
-    // Enable input
+  
     $('debateInput').disabled = false;
     document.querySelector('.input-wrapper .btn-primary').disabled = false;
 }
@@ -424,30 +400,30 @@ function sendArgument() {
         return;
     }
 
-    // Add user message
+   
     addMessage('user', text);
 
-    // Clear input
+  
     input.value = '';
     input.disabled = true;
     document.querySelector('.input-wrapper .btn-primary').disabled = true;
 
-    // Show thinking
+    
     addMessage('ai', '⏳ Thinking...', true);
 
-    // Simulate AI thinking
+   
     setTimeout(() => {
-        // Remove thinking message
+        
         const chat = $('debateChat');
         const lastMsg = chat.lastElementChild;
         if (lastMsg && lastMsg.querySelector('.msg-fallback')) {
             lastMsg.remove();
         }
 
-        // Generate AI response
+        
         const aiResponse = generateAIResponse(text);
 
-        // Calculate scores (simulated)
+        
         const userScore = Math.floor(Math.random() * 30) + 65; // 65-95
         const aiScore = Math.floor(Math.random() * 30) + 60; // 60-90
 
@@ -455,17 +431,17 @@ function sendArgument() {
         state.aiScore += aiScore;
         state.currentRound++;
 
-        // Add AI message
+        
         addMessage('ai', aiResponse, false, {
             userScore: userScore,
             aiScore: aiScore,
             feedback: getRandomFeedback(userScore)
         });
 
-        // Update scores
+        
         updateScores();
 
-        // Check if debate is complete
+     
         if (state.currentRound >= state.maxRounds) {
             document.querySelector('.input-wrapper .btn-primary').disabled = true;
             $('debateInput').disabled = true;
@@ -477,7 +453,6 @@ function sendArgument() {
             input.focus();
         }
 
-        // Update tips
         updateTips(userScore);
 
     }, 1500 + Math.random() * 1000);
@@ -487,10 +462,9 @@ function generateAIResponse(userText) {
     const topic = state.currentDebate;
     const responses = aiResponses[topic?.title] || aiResponses['default'];
 
-    // Pick a random response
     let response = responses[Math.floor(Math.random() * responses.length)];
 
-    // Sometimes add a counter-argument structure
+    
     if (Math.random() > 0.5) {
         response += " Furthermore, consider that " + getRandomCounter();
     }
@@ -522,7 +496,7 @@ function getRandomFeedback(score) {
 function addMessage(type, text, isThinking = false, meta = null) {
     const chat = $('debateChat');
 
-    // Remove start message if present
+    
     const startMsg = chat.querySelector('.debate-start-msg');
     if (startMsg) startMsg.remove();
 
@@ -550,7 +524,7 @@ function addMessage(type, text, isThinking = false, meta = null) {
     div.innerHTML = html;
     chat.appendChild(div);
 
-    // Scroll to bottom
+
     chat.scrollTop = chat.scrollHeight;
 }
 
@@ -565,7 +539,7 @@ function updateScores() {
     document.querySelector('.user-score-fill').style.width = `${userPercent}%`;
     document.querySelector('.ai-score-fill').style.width = `${aiPercent}%`;
 
-    // Update IQ
+    
     const iq = Math.round(50 + (state.userScore - state.aiScore) * 0.5 + Math.random() * 10);
     state.iqScore = Math.max(0, Math.min(100, iq));
     document.querySelector('.iq-fill').style.width = `${state.iqScore}%`;
@@ -633,19 +607,19 @@ function endDebate() {
 
     state.stats.totalDebates++;
 
-    // Show result modal
+  
     $('resultIcon').textContent = icon;
     $('resultTitle').textContent = title;
     $('resultUserScore').textContent = Math.round((state.userScore / (state.userScore + state.aiScore)) * 100);
     $('resultAiScore').textContent = Math.round((state.aiScore / (state.userScore + state.aiScore)) * 100);
 
-    // Generate feedback
+   
     const feedback = generateFeedback(result);
     $('resultFeedback').innerHTML = feedback.map(f => `<p>${f}</p>`).join('');
 
     $('resultModal').classList.add('show');
 
-    // Save to history
+  
     saveDebateHistory(result);
 }
 
@@ -691,9 +665,7 @@ function getHint() {
     alert(hints[Math.floor(Math.random() * hints.length)]);
 }
 
-// ============================================
-// VOICE INPUT
-// ============================================
+
 
 function speakArgument() {
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
@@ -726,30 +698,28 @@ function speakArgument() {
     recognition.start();
 }
 
-// ============================================
-// DASHBOARD
-// ============================================
+
 
 function renderDashboard() {
-    // Update username
+    
     $('username').textContent = state.currentUser ? state.currentUser.username : 'Debater';
 
-    // Update stats
+   
     $('totalDebates').textContent = state.stats.totalDebates;
     $('wins').textContent = state.stats.wins;
     $('losses').textContent = state.stats.losses;
     $('draws').textContent = state.stats.draws;
 
-    // Update IQ
+    
     const iq = state.iqScore || Math.floor(Math.random() * 30) + 60;
     $('iqFillLarge').style.width = `${iq}%`;
     $('iqValueLarge').textContent = iq;
     $('percentile').textContent = Math.floor(Math.random() * 30) + 60;
 
-    // Render achievements
+   
     renderAchievements();
 
-    // Render history
+  
     renderHistory();
 }
 
@@ -806,9 +776,7 @@ function saveDebateHistory(result) {
     localStorage.setItem('debateHistory', JSON.stringify(history));
 }
 
-// ============================================
-// SPEECH SYNTHESIS (for voice feedback)
-// ============================================
+
 
 function speakText(text) {
     if ('speechSynthesis' in window) {
@@ -820,18 +788,14 @@ function speakText(text) {
     }
 }
 
-// ============================================
-// INIT
-// ============================================
 
-// Initial render
+
 renderTopics();
 updateUIAfterAuth();
 
 console.log('⚖️ DebateMate initialized successfully!');
 console.log('💡 Start a debate or explore topics to begin.');
 
-// Keyboard shortcut: Ctrl+Enter to send
 document.addEventListener('keydown', (e) => {
     if (e.ctrlKey && e.key === 'Enter') {
         if (state.currentPage === 'debate') {
